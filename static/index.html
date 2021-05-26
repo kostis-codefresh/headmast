@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	<title>The Perfect 3 Column Liquid Layout: No CSS hacks. SEO friendly. iPhone compatible.</title>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+	<meta name="description" content="The Perfect 3 Column Liquid Layout: No CSS hacks. SEO friendly. iPhone compatible." />
+	<meta name="keywords" content="The Perfect 3 Column Liquid Layout: No CSS hacks. SEO friendly. iPhone compatible." />
+	<meta name="robots" content="index, follow" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="shortcut icon" href="favicon.png" type="image/png" />
+	<link rel="stylesheet" type="text/css" href="screen.css" media="screen" />
+</head>
+<body>
+
+<div id="header">
+	<img src="transparent-logo.png" class="figure-img float-left" alt="...">
+	<h1>Headmast</h1>
+	<h2>GitOps Application Delivery platform</h2>
+	<ul>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-3-column.htm" class="active">Environments</a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-3-column-blog-style.htm">Applications</a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-left-menu.htm">Features</a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-right-menu.htm">Deployments</a></li>
+		<li><a href="http://matthewjamestaylor.com/blog/perfect-2-column-right-menu.htm">Settings</a></li>
+	</ul>
+	<p id="layoutdims">Home &rarr; Environments  </p>
+</div>
+<div class="colmask threecol">
+	<div class="colmid">
+		<div class="colleft">
+			<div class="col1">
+				<!-- Column 1 start -->
+				<h3>Card example</h3>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="card">
+							<h5 class="card-header">Staging</h5>
+							<div class="card-body">
+								<h5 class="card-title">Special title treatment</h5>
+								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							<a href="#" class="card-link">Card link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<h5 class="card-header">Production</h5>
+							<div class="card-body">
+								<h5 class="card-title">Special title treatment</h5>
+								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+								<p>Status: <span class="badge badge-pill badge-success">Success</span></p>
+							<a href="#" class="card-link">Card link</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<h2>Percentage dimensions of the holy grail layout</h2>
+				<img src="perfect-3-column-dimensions.gif" width="350" height="370" alt="Three column layout dimensions" />
+				<p>All the dimensions are in percentage widths so the layout adjusts to any screen resolution. Vertical dimensions are not set so they stretch to the height of the content.</p>
+				<h3>Maximum column content widths</h3>
+				<p>To prevent wide content (like long URLs) from destroying the layout (long content can make the page scroll horizontally) the column content divs are set to overflow:hidden. This chops off any content that is wider than the div. Because of this, it's important to know the maximum widths allowable at common screen resolutions. For example, if you choose 800 x 600 pixels as your minimum compatible resolution what is the widest image that can be safely added to each column before it gets chopped off? Here are the figures:</p>
+				<dl>
+					<dt><strong>800 x 600</strong></dt>
+					<dd>Left &amp; right columns: 162 pixels</dd>
+					<dd>Center page: 357 pixels</dd>
+					<dt><strong>1024 x 768</strong></dt>
+					<dd>Left &amp; right columns: 210 pixels</dd>
+					<dd>Center page: 459 pixels</dd>
+				</dl>
+				<h2>tables</h2>
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">First</th>
+							<th scope="col">Last</th>
+							<th scope="col">Handle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">1</th>
+							<td>Mark</td>
+							<td>Otto</td>
+							<td>@mdo</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>Jacob</td>
+							<td>Thornton</td>
+							<td>@fat</td>
+						</tr>
+						<tr>
+							<th scope="row">3</th>
+							<td>Larry</td>
+							<td>the Bird</td>
+							<td>@twitter</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2>The nested div structure</h2>
+				<p>I've colour coded each div so it's easy to see:</p>
+				<img src="perfect-3-column-div-structure.gif" width="350" height="369" alt="Three column layout nested div structure" />
+				<p>The header, colmask and footer divs are 100% wide and stacked vertically one after the other. Colmid is inside colmask and colleft is inside colmid. The three column content divs (col1, col2 &amp; col3) are inside colleft. Notice that the main content column (col1) comes before the other columns.</p>
+				<nav aria-label="...">
+					<ul class="pagination">
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item active" aria-current="page">
+							<a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item">
+							<a class="page-link" href="#">Next</a>
+						</li>
+					</ul>
+				</nav>
+				<!-- Column 1 end -->
+			</div>
+			<div class="col2">
+				<!-- Column 2 start -->
+				<h2>Filters</h2>
+				<p>Per application</p>
+				<p>Per environment</p>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+					<label class="form-check-label" for="defaultCheck1">
+						Default checkbox
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" value="" id="defaultCheck2" disabled>
+					<label class="form-check-label" for="defaultCheck2">
+						Disabled checkbox
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+					<label class="form-check-label" for="exampleRadios1">
+						Default radio
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+					<label class="form-check-label" for="exampleRadios2">
+						Second default radio
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+					<label class="form-check-label" for="exampleRadios3">
+						Disabled radio
+					</label>
+				</div>
+				<h2>No JavaScript</h2>
+				<form class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				<p>JavaScript is not required. Some website layouts rely on JavaScript hacks to resize divs and force elements into place but you won't see any of that nonsense here. The JavaScript at the bottom of this page is just my Google Analytics tracking code, you can remove this when you use the layout.</p>
+				<h2>Stats</h2>
+				<figure class="figure">
+					<img src="https://placekitten.com/200/200" class="figure-img img-fluid rounded" alt="...">
+					<figcaption class="figure-caption">Velocity</figcaption>
+				</figure>
+				<figure class="figure">
+					<img src="https://placekitten.com/200/200" class="figure-img img-fluid rounded" alt="...">
+					<figcaption class="figure-caption">Error rate</figcaption>
+				</figure>
+				<!-- Column 2 end -->
+			</div>
+			<div class="col3">
+				<!-- Column 3 start -->
+
+				<h3>Environment properties</h3>
+				<ul>
+					<li>one</li>
+					<li>two</li>
+					<li>three</li>
+					<li>Netscape 9.0.0.5 &amp; 7.1</li>
+				</ul>
+				<h3>Windows</h3>
+				<ul>
+					<li>Firefox 1.5, 2 &amp; 3</li>
+					<li>Safari</li>
+					<li>Opera 8.1 &amp; 9</li>
+					<li>Google Chrome</li>
+					<li>Explorer 5.5, 6 &amp; 7</li>
+					<li>Netscape 8</li>
+				</ul>
+				<!-- Column 3 end -->
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footer">
+	<p> <a href="https://codefresh.io/docs/">Documentation</a> |  <a href="https://codefresh.io/docs/docs/whats-new/whats-new/">Changelog</a> | <a href="https://status.codefresh.io/">System status</a></p>
+</div>
+
+</body>
+</html>
