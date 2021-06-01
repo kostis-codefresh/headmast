@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"database/sql"
@@ -18,7 +18,8 @@ type App struct {
 func (a *App) Run(addr string) {
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()
-	log.Fatal(http.ListenAndServe(":8080", a.Router))
+	log.Println("Listening at " + addr)
+	log.Fatal(http.ListenAndServe(addr, a.Router))
 
 }
 
