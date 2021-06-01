@@ -54,7 +54,11 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	w.Write(response)
+	_, err := w.Write(response)
+
+	if err != nil {
+		log.Printf("Could not respond to request")
+	}
 }
 
 func (a *App) getProducts(w http.ResponseWriter, r *http.Request) {
