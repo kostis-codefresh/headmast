@@ -16,16 +16,20 @@ limitations under the License.
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 
+	"github.com/kostis-codefresh/headmast/model"
 	"github.com/spf13/cobra"
 )
 
-// envCmd represents the env command
-var envCmd = &cobra.Command{
-	Use:     "environment",
-	Short:   "A brief description of your command",
-	Aliases: []string{"env"},
+// createCmd represents the create command
+var envListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List all applications",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -33,20 +37,43 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("env called")
+		fmt.Println("list called")
+
+		url := "http://" + address + ":" + port + "/api/envs"
+		resp, err := http.Get(url)
+		log.Println("Calling " + url)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		log.Println("Called")
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			log.Println("Non-OK HTTP status:", resp.StatusCode)
+			// return assetDetails, errors.New("Could not access " + url)
+			return
+		}
+
+		log.Println("Response status of api.github.com:", resp.Status)
+
+		buf := new(bytes.Buffer)
+		_, err = buf.ReadFrom(resp.Body)
+		if err != nil {
+			return
+		}
+
+		var envs []model.Environment
+		err = json.Unmarshal(buf.Bytes(), &envs)
+
+		if err != nil {
+			return
+		}
+		log.Printf("Unmarshaled: %v", envs)
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(envCmd)
+	envCmd.AddCommand(envListCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// envCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// envCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

@@ -16,6 +16,8 @@ func (b *Backend) createApplication(w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 
+	b.lastIdUsed++
+	app.ID = b.lastIdUsed
 	b.Applications = append(b.Applications, app)
 
 	respondWithJSON(w, http.StatusCreated, app)

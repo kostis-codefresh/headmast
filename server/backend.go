@@ -13,12 +13,15 @@ import (
 
 type Backend struct {
 	Router       *mux.Router
+	lastIdUsed   int
 	DB           *sql.DB
 	Applications []model.Application
+	Environments []model.Environment
 }
 
 func (a *Backend) Run(addr string) {
 	a.Applications = make([]model.Application, 0)
+	a.Environments = make([]model.Environment, 0)
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()
 	log.Println("Listening at " + addr)
@@ -155,6 +158,9 @@ func (a *Backend) initializeRoutes() {
 	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.getApplication).Methods("GET")
 	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.updateApplication).Methods("PUT")
 	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.deleteApplication).Methods("DELETE")
+
+	a.Router.HandleFunc("/api/envs", a.getEnvironments).Methods("GET")
+	a.Router.HandleFunc("/api/envs", a.createEnvironment).Methods("POST")
 
 	a.Router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 }

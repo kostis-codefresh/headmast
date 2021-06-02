@@ -27,9 +27,9 @@ import (
 )
 
 // createCmd represents the create command
-var appCreateCmd = &cobra.Command{
+var envCreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create a new application",
+	Short: "Create a new Environment",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -37,16 +37,16 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("create called")
+		fmt.Println("env create called")
 
-		app := model.Application{
-			Name:        name,
-			Description: description,
+		env := model.Environment{
+			Name:        envName,
+			Description: envDescription,
 		}
 
-		jsonValue, _ := json.Marshal(app)
+		jsonValue, _ := json.Marshal(env)
 
-		url := "http://" + address + ":" + port + "/api/apps"
+		url := "http://" + address + ":" + port + "/api/envs"
 		resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
 		if err != nil {
 			log.Println(err.Error())
@@ -68,23 +68,23 @@ to quickly create a Cobra application.`,
 			return
 		}
 
-		returnedApp := model.Application{}
-		err = json.Unmarshal(buf.Bytes(), &returnedApp)
+		returnedEnv := model.Environment{}
+		err = json.Unmarshal(buf.Bytes(), &returnedEnv)
 		if err != nil {
 			log.Println(err.Error())
 			return
 		}
-		log.Println(returnedApp)
+		log.Println(returnedEnv)
 	},
 }
 
 var (
-	name        string
-	description string
+	envName        string
+	envDescription string
 )
 
 func init() {
-	applicationCmd.AddCommand(appCreateCmd)
+	envCmd.AddCommand(envCreateCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -94,7 +94,7 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	appCreateCmd.Flags().StringVarP(&name, "name", "n", "example-app", "Name of the application")
-	appCreateCmd.Flags().StringVarP(&description, "description", "d", "example Application", "Description of the application")
+	envCreateCmd.Flags().StringVarP(&envName, "name", "n", "example-env", "Name of the Environment")
+	envCreateCmd.Flags().StringVarP(&envDescription, "description", "d", "example Environment", "Description of the Environment")
 
 }
