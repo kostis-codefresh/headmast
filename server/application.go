@@ -1,33 +1,11 @@
 package server
 
 import (
-	"database/sql"
 	"encoding/json"
-	"errors"
 	"net/http"
 
 	"github.com/kostis-codefresh/headmast/model"
 )
-
-func getApplication(db *sql.DB) (*model.Application, error) {
-	return nil, errors.New("Not implemented")
-}
-
-func updateApplication(db *sql.DB) (*model.Application, error) {
-	return nil, errors.New("Not implemented")
-}
-
-func deleteApplication(db *sql.DB) (*model.Application, error) {
-	return nil, errors.New("Not implemented")
-}
-
-func createApplication(a *model.Application) (*model.Application, error) {
-	return nil, errors.New("Not implemented")
-}
-
-func getApplications(db *sql.DB, start, count int) ([]model.Application, error) {
-	return nil, errors.New("Not implemented")
-}
 
 func (b *Backend) createApplication(w http.ResponseWriter, r *http.Request) {
 	var app model.Application
