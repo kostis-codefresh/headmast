@@ -26,6 +26,7 @@ var serverCmd = &cobra.Command{
 	Short: "Start the server component",
 	Long: `Starts the server component that serves both the UI and the API at /api
 	You can specify the host and port with the respective flags`,
+	Example: "headmast server --address=127.0.0.1 --port=9000",
 	Run: func(cmd *cobra.Command, args []string) {
 		a := server.App{}
 

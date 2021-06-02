@@ -21,11 +21,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// applicationCmd represents the application command
-var applicationCmd = &cobra.Command{
-	Use:     "application",
-	Short:   "manage applications",
-	Aliases: []string{"app"},
+// createCmd represents the create command
+var appGetCmd = &cobra.Command{
+	Use:   "get",
+	Short: "Show details for an application",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -33,20 +32,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("application called")
+		fmt.Println("get called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(applicationCmd)
+	applicationCmd.AddCommand(appGetCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// applicationCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// applicationCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

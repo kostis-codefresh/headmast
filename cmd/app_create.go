@@ -22,9 +22,9 @@ import (
 )
 
 // createCmd represents the create command
-var createCmd = &cobra.Command{
+var appCreateCmd = &cobra.Command{
 	Use:   "create",
-	Short: "A brief description of your command",
+	Short: "Create a new application",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -37,7 +37,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	applicationCmd.AddCommand(createCmd)
+	applicationCmd.AddCommand(appCreateCmd)
 
 	// Here you will define your flags and configuration settings.
 

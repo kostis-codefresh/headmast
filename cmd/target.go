@@ -24,13 +24,12 @@ import (
 // targetCmd represents the target command
 var targetCmd = &cobra.Command{
 	Use:   "target",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Choose which server to talk to",
+	Long: `You can interface with multiple headmast servers with the same CLI.
+Each server will be a different target:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+By default headmast will try to talk to a local server. Use the login subcommand
+to choose a different headmast installation.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("target called")
 	},
