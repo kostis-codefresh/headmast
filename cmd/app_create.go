@@ -16,8 +16,13 @@ limitations under the License.
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 
+	"github.com/kostis-codefresh/headmast/model"
 	"github.com/spf13/cobra"
 )
 
@@ -33,6 +38,43 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("create called")
+
+		app := model.Application{
+			Name:    name,
+			Version: version,
+		}
+
+		jsonValue, _ := json.Marshal(app)
+
+		url := "http://" + address + ":" + port + "/api/apps"
+		resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonValue))
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusCreated {
+			log.Println("Non-OK HTTP status:", resp.StatusCode)
+			return
+		}
+
+		log.Println("Response status of api.github.com:", resp.Status)
+
+		buf := new(bytes.Buffer)
+		_, err = buf.ReadFrom(resp.Body)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+
+		returnedApp := model.Application{}
+		err = json.Unmarshal(buf.Bytes(), &returnedApp)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		log.Println(returnedApp)
 	},
 }
 
@@ -52,38 +94,7 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	applicationCmd.Flags().StringVarP(&name, "name", "n", "example-app", "Name of the application")
-	applicationCmd.Flags().StringVarP(&version, "version", "b", "0.1", "Version of the application")
-
-	// app := model.Application{
-	// 	Name:    name,
-	// 	Version: version,
-	// }
-
-	// url := "https://" + address + ":" + port + "/api/apps"
-	// resp, err := http.Get(url)
-	// if err != nil {
-	// 	return assetDetails, err
-	// }
-	// defer resp.Body.Close()
-
-	// if resp.StatusCode != http.StatusOK {
-	// 	log.Println("Non-OK HTTP status:", resp.StatusCode)
-	// 	return assetDetails, errors.New("Could not access " + url)
-	// }
-
-	// log.Println("Response status of api.github.com:", resp.Status)
-
-	// buf := new(bytes.Buffer)
-	// _, err = buf.ReadFrom(resp.Body)
-	// if err != nil {
-	// 	return assetDetails, err
-	// }
-
-	// releaseResp := releaseResponse{}
-	// err = json.Unmarshal(buf.Bytes(), &releaseResp)
-	// if err != nil {
-	// 	return assetDetails, err
-	// }
+	appCreateCmd.Flags().StringVarP(&name, "name", "n", "example-app", "Name of the application")
+	appCreateCmd.Flags().StringVarP(&version, "version", "b", "0.1", "Version of the application")
 
 }
