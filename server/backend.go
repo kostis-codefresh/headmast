@@ -8,14 +8,17 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/kostis-codefresh/headmast/model"
 )
 
-type App struct {
-	Router *mux.Router
-	DB     *sql.DB
+type Backend struct {
+	Router       *mux.Router
+	DB           *sql.DB
+	Applications []model.Application
 }
 
-func (a *App) Run(addr string) {
+func (a *Backend) Run(addr string) {
+	a.Applications = make([]model.Application, 0)
 	a.Router = mux.NewRouter()
 	a.initializeRoutes()
 	log.Println("Listening at " + addr)
@@ -23,7 +26,7 @@ func (a *App) Run(addr string) {
 
 }
 
-func (a *App) getProduct(w http.ResponseWriter, r *http.Request) {
+func (a *Backend) getProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -61,7 +64,7 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	}
 }
 
-func (a *App) getProducts(w http.ResponseWriter, r *http.Request) {
+func (a *Backend) getProducts(w http.ResponseWriter, r *http.Request) {
 	count, _ := strconv.Atoi(r.FormValue("count"))
 	start, _ := strconv.Atoi(r.FormValue("start"))
 
@@ -81,7 +84,7 @@ func (a *App) getProducts(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, products)
 }
 
-func (a *App) createProduct(w http.ResponseWriter, r *http.Request) {
+func (a *Backend) createProduct(w http.ResponseWriter, r *http.Request) {
 	var p product
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&p); err != nil {
@@ -98,7 +101,7 @@ func (a *App) createProduct(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusCreated, p)
 }
 
-func (a *App) updateProduct(w http.ResponseWriter, r *http.Request) {
+func (a *Backend) updateProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -123,7 +126,7 @@ func (a *App) updateProduct(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, p)
 }
 
-func (a *App) deleteProduct(w http.ResponseWriter, r *http.Request) {
+func (a *Backend) deleteProduct(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
@@ -140,11 +143,18 @@ func (a *App) deleteProduct(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
-func (a *App) initializeRoutes() {
+func (a *Backend) initializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
 	a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
+
+	a.Router.HandleFunc("/api/apps", a.getApplications).Methods("GET")
+	a.Router.HandleFunc("/api/apps", a.createApplication).Methods("POST")
+	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.getApplication).Methods("GET")
+	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.updateApplication).Methods("PUT")
+	// a.Router.HandleFunc("/api/apps/{id:[0-9]+}", a.deleteApplication).Methods("DELETE")
+
 	a.Router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 }

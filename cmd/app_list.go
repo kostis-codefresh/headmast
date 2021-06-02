@@ -16,8 +16,13 @@ limitations under the License.
 package cmd
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
 
+	"github.com/kostis-codefresh/headmast/model"
 	"github.com/spf13/cobra"
 )
 
@@ -33,19 +38,42 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("list called")
+
+		url := "http://" + address + ":" + port + "/api/apps"
+		resp, err := http.Get(url)
+		log.Println("Calling " + url)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+		log.Println("Called")
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			log.Println("Non-OK HTTP status:", resp.StatusCode)
+			// return assetDetails, errors.New("Could not access " + url)
+			return
+		}
+
+		log.Println("Response status of api.github.com:", resp.Status)
+
+		buf := new(bytes.Buffer)
+		_, err = buf.ReadFrom(resp.Body)
+		if err != nil {
+			return
+		}
+
+		var apps []model.Application
+		err = json.Unmarshal(buf.Bytes(), &apps)
+
+		if err != nil {
+			return
+		}
+		log.Printf("Unmarshaled: %v", apps)
 	},
 }
 
 func init() {
 	applicationCmd.AddCommand(appListCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// createCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

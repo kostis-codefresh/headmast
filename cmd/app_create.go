@@ -36,6 +36,11 @@ to quickly create a Cobra application.`,
 	},
 }
 
+var (
+	name    string
+	version string
+)
+
 func init() {
 	applicationCmd.AddCommand(appCreateCmd)
 
@@ -47,5 +52,38 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// createCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	applicationCmd.Flags().StringVarP(&name, "name", "n", "example-app", "Name of the application")
+	applicationCmd.Flags().StringVarP(&version, "version", "b", "0.1", "Version of the application")
+
+	// app := model.Application{
+	// 	Name:    name,
+	// 	Version: version,
+	// }
+
+	// url := "https://" + address + ":" + port + "/api/apps"
+	// resp, err := http.Get(url)
+	// if err != nil {
+	// 	return assetDetails, err
+	// }
+	// defer resp.Body.Close()
+
+	// if resp.StatusCode != http.StatusOK {
+	// 	log.Println("Non-OK HTTP status:", resp.StatusCode)
+	// 	return assetDetails, errors.New("Could not access " + url)
+	// }
+
+	// log.Println("Response status of api.github.com:", resp.Status)
+
+	// buf := new(bytes.Buffer)
+	// _, err = buf.ReadFrom(resp.Body)
+	// if err != nil {
+	// 	return assetDetails, err
+	// }
+
+	// releaseResp := releaseResponse{}
+	// err = json.Unmarshal(buf.Bytes(), &releaseResp)
+	// if err != nil {
+	// 	return assetDetails, err
+	// }
+
 }

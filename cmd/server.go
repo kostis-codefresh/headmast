@@ -28,7 +28,7 @@ var serverCmd = &cobra.Command{
 	You can specify the host and port with the respective flags`,
 	Example: "headmast server --address=127.0.0.1 --port=9000",
 	Run: func(cmd *cobra.Command, args []string) {
-		a := server.App{}
+		a := server.Backend{}
 
 		a.Run(address + ":" + port)
 	},
