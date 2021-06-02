@@ -8,5 +8,5 @@ type Deployment struct {
 
 	ParentApplication *Application
 	ParentEnvironment *Environment
-	Features          []*Feature
+	Features          []*Feature `json:"-"`
 }
